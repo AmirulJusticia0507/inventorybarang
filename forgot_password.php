@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usernameOrFullname = cleanInput($_POST['usernameOrFullname']);
 
     // Query untuk mencari user berdasarkan username atau fullname
-    $query = "SELECT userid, username, fullname FROM db_toko_amirul.users WHERE username = ? OR fullname = ?";
+    $query = "SELECT userid, username, fullname FROM db_toko_roti_enak.users WHERE username = ? OR fullname = ?";
     $stmt = $koneklocalhost->prepare($query);
     $stmt->bind_param("ss", $usernameOrFullname, $usernameOrFullname);
     $stmt->execute();
@@ -40,9 +40,9 @@ function cleanInput($input)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password Amirul Shop</title>
+    <title>Forgot Password Stock Classifier</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="icon" href="img/stockclassifier.png" type="image/png">
+    <link rel="icon" href="img/stockclassifier1.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
         *{
@@ -168,9 +168,9 @@ function cleanInput($input)
 <body>
     <div class="content">
         <div class="col-md-6" align="center">
-            <img src="img/stockclassifier.png" alt="Image" class="img-fluid" style="width:100%">
+            <img src="img/stockclassifier1.png" alt="Image" class="img-fluid" style="width:100%">
         </div>
-        <div class="text">Forgot Password <span style="color:green">Amirul Shop</span></div>
+        <div class="text">Forgot Password <span style="color:green">Stock Classifier</span></div>
         <form action="#" method="post">
             <?php if (isset($error)) : ?>
                 <div class="error"><?php echo $error; ?></div>

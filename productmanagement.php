@@ -107,32 +107,12 @@ if (!isset($_SESSION['userid'])) {
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.php?page=dashboard">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">Products</li>
                     </ol>
                 </nav>
                 <?php
                 include 'navigation.php';
                 ?>
-
-                <div class="row" align="center">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="small-box bg-secondary">
-                            <div class="inner text-center">
-                                <i class="fas fa-user fa-3x"></i>
-                                <h5 class="card-title mt-3">Product</h5>
-                                <p class="card-text">Product Management</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <a href="productmanagement.php?page=productmanagement" class="small-box-footer">
-                                Manage Products <i class="fas fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <hr><br>
 
             </main>
         </div>

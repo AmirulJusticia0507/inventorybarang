@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $token = generateToken();
 
     // Query untuk menyimpan user baru ke database
-    $query = "INSERT INTO db_toko_amirul.users (Username, PASSWORD, FullName, created_at, status, tokenize, alamat, no_hp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO db_toko_roti_enak.users (Username, PASSWORD, FullName, created_at, status, tokenize, alamat, no_hp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $koneklocalhost->prepare($query);
     $stmt->bind_param("ssssssss", $username, $hashedPassword, $fullname, $created_at, $role, $token, $alamat, $no_hp);
     
@@ -61,7 +61,7 @@ function generateToken($length = 32)
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
     <title>Signup Amirul Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="icon" href="img/stockclassifier.png" type="image/png">
+    <link rel="icon" href="img/stockclassifier1.png" type="image/png">
     <style>
         * {
             margin: 0;
@@ -169,7 +169,7 @@ function generateToken($length = 32)
 <body>
     <div class="content">
         <div class="col-md-6" align="center">
-            <img src="img/stockclassifier.png" alt="Image" class="img-fluid" style="width:100%">
+            <img src="img/stockclassifier1.png" alt="Image" class="img-fluid" style="width:100%">
         </div>
         <div class="text">Signup <br><span style="color:green">Amirul Shop</span></div>
         <form action="#" method="post">

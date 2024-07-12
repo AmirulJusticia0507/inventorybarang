@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 <!-- <link rel="stylesheet" href="uploadfoto.css"> -->
-    <link rel="icon" href="img/stockclassifier.png" type="image/png">
+    <link rel="icon" href="img/stockclassifier1.png" type="image/png">
     <style>
         /* Tambahkan CSS agar tombol accordion terlihat dengan baik */
         .btn-link {

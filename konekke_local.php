@@ -3,7 +3,7 @@ $server = "localhost";
 // $username = "root";
 $username = "root";
 $password = "";
-$database = "db_toko_amirul";
+$database = "db_toko_roti_enak";
 
 // Buat koneksi ke server
 $koneklocalhost = new mysqli($server, $username, $password, $database);

@@ -12,13 +12,6 @@
                             }
                             break;
                 
-                        case 'cart':
-                            if ($currentPage !== 'cart.php') {
-                                header("Location: cart.php?page=cart");
-                                exit;
-                            }
-                            break;
-                
                         case 'profile.php':
                             if ($currentPage !== 'profile.php.php') {
                                 header("Location: profile.php.php?page=profile.php");
@@ -26,37 +19,9 @@
                             }
                             break;
                 
-                        case 'categories':
-                            if ($currentPage !== 'categories.php') {
-                                header("Location: categories.php?page=categories");
-                                exit;
-                            }
-                            break;
-
-                        case 'brands':
-                            if ($currentPage !== 'brands.php') {
-                                header("Location: brands.php?page=brands");
-                                exit;
-                            }
-                            break;
-                        
-                        case 'catalog':
-                            if ($currentPage !== 'catalog.php') {
-                                header("Location: catalog.php?page=catalog");
-                                exit;
-                            }
-                            break;
-
-                        case 'riwayattransaksi':
-                            if ($currentPage !== 'riwayattransaksi.php') {
-                                header("Location: riwayattransaksi.php?page=riwayattransaksi");
-                                exit;
-                            }
-                            break;
-                        
-                        case 'wishlist':
-                            if ($currentPage !== 'wishlist.php') {
-                                header("Location: wishlist.php?page=wishlist");
+                        case 'Classification':
+                            if ($currentPage !== 'Classification.php') {
+                                header("Location: Classification.php?page=Classification");
                                 exit;
                             }
                             break;

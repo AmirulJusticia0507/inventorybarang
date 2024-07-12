@@ -36,7 +36,7 @@
                 // require 'koneksi_server.php';
                 require 'konekke_local.php';
 
-                $query = "SELECT username, fullname FROM db_toko_amirul.users WHERE userid = $userID";
+                $query = "SELECT username, fullname FROM db_toko_roti_enak.users WHERE userid = $userID";
                 $result = $koneklocalhost->query($query);
 
                 if ($result->num_rows > 0) {

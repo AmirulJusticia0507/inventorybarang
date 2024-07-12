@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = cleanInput($_POST['password']);
 
     // Query untuk mencari user berdasarkan username atau fullname
-    $query = "SELECT userid, username, password, fullname, status FROM db_toko_amirul.users WHERE username = ? OR fullname = ?";
+    $query = "SELECT userid, username, password, fullname, status FROM db_toko_roti_enak.users WHERE username = ? OR fullname = ?";
     $stmt = $koneklocalhost->prepare($query);
     $stmt->bind_param("ss", $usernameOrFullname, $usernameOrFullname);
     $stmt->execute();
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $token = generateToken();
 
             // Simpan token dan update login_date ke dalam database
-            $updateQuery = "UPDATE db_toko_amirul.users SET login_date = ?, tokenize = ? WHERE userid = ?";
+            $updateQuery = "UPDATE db_toko_roti_enak.users SET login_date = ?, tokenize = ? WHERE userid = ?";
             $updateStmt = $koneklocalhost->prepare($updateQuery);
             $updateStmt->bind_param("ssi", $login_date, $token, $row['userid']);
             $updateStmt->execute();
@@ -90,9 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="content">
         <div class="col-md-6" align="center">
-            <img src="img/stockclassifier.png" alt="Image" class="img-fluid" style="width:100%">
+            <img src="img/stockclassifier1.png" alt="Image" class="img-fluid" style="width:100%">
         </div>
-        <div class="text">Login <br><span style="color:green">Amirul Shop</span></div>
+        <div class="text">Login <br><span style="color:green">Stock Classifier</span></div>
         <form action="#" method="post">
             <?php if (isset($error)) : ?>
                 <div class="error"><?php echo $error; ?></div>
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Sign in</button>
             <div class="sign-up">
                 Not a member?
-                <!-- <a href="signup.php?page=signup">Signup now</a> -->
+                <a href="signup.php?page=signup">Signup now</a><br><br>
                 <a href="signupcustomer.php">Signup for Customer</a>
             </div>
         </form>
