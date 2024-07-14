@@ -111,7 +111,7 @@ $klasifikasi_sql = "SELECT id, nama_klasifikasi FROM klasifikasi_barang";
 $klasifikasi_result = $koneklocalhost->query($klasifikasi_sql);
 
 // Ambil data barang
-$barang_sql = "SELECT barang.id, barang.nama_barang, barang.deskripsi, barang.harga, barang.stok, klasifikasi_barang.nama_klasifikasi 
+$barang_sql = "SELECT barang.id, barang.nama_barang, barang.deskripsi, barang.harga, barang.stok, barang.photo_product, klasifikasi_barang.nama_klasifikasi 
                FROM barang 
                JOIN klasifikasi_barang ON barang.klasifikasi_id = klasifikasi_barang.id";
 $barang_result = $koneklocalhost->query($barang_sql);
@@ -271,6 +271,7 @@ $barang_result = $koneklocalhost->query($barang_sql);
                                 <tr>
                                     <th>ID</th>
                                     <th>Nama Barang</th>
+                                    <th>Foto barang</th>
                                     <th>Deskripsi</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
@@ -283,6 +284,15 @@ $barang_result = $koneklocalhost->query($barang_sql);
                                     <tr id="row_<?= $row['id'] ?>">
                                         <td><?= $row['id'] ?></td>
                                         <td><?= $row['nama_barang'] ?></td>
+                                        <td>
+                                            <?php if (file_exists("uploads/products/{$row['photo_product']}")): ?>
+                                                <a href="uploads/products/<?= $row['photo_product'] ?>" data-fancybox="gallery" data-caption="<?= $row['nama_barang'] ?>">
+                                                    <img src="uploads/products/<?= $row['photo_product'] ?>" alt="<?= $row['nama_barang'] ?>" class="img-thumbnail" width="100">
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-danger">Gambar tidak ditemukan</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td><?= $row['deskripsi'] ?></td>
                                         <td><?= number_format($row['harga'], 2) ?></td>
                                         <td><?= $row['stok'] ?></td>
@@ -321,11 +331,11 @@ $barang_result = $koneklocalhost->query($barang_sql);
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     </div>
-<?php include 'footer.php'; ?>
+    
+    <?php include 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
