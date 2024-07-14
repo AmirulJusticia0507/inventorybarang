@@ -38,7 +38,7 @@ CREATE TABLE `barang` (
 /*Data for the table `barang` */
 
 insert  into `barang`(`id`,`nama_barang`,`deskripsi`,`harga`,`stok`,`klasifikasi_id`,`photo_product`,`created_at`,`updated_at`) values 
-(3,'',NULL,0.00,0,NULL,'laptop_asus.jpg','2024-07-12 23:53:04','2024-07-13 00:08:55'),
+(3,'Laptop ASUS ROG','Laptop Gaming Asus',17000000.00,10,1,'laptop_rog_strix.png','2024-07-12 23:53:04','2024-07-14 23:39:54'),
 (4,'Kemeja Pria','Kemeja lengan panjang untuk pria',250000.00,50,2,'kemeja pria.jpg','2024-07-12 23:53:04','2024-07-14 23:25:24'),
 (5,'Blender Philips','Blender multifungsi untuk kebutuhan dapur',500000.00,20,3,'blender philips.jpg','2024-07-12 23:53:04','2024-07-14 23:26:15');
 
@@ -87,7 +87,7 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`userid`,`username`,`password`,`fullname`,`tokenize`,`alamat`,`no_hp`,`phto_profile`,`created_at`,`updated_at`,`login_date`,`logout_date`,`status`) values 
-(14,'amirul007','$2y$10$NRkn4nZ13cJ4oZSH2v2.Hu9OGkVLi8WnI6WGFHBwZQmJRn6WzzwCm','Amirul Putra Justicia','54ae6287748004e6c3250c51cfd2ccb6813448ee8a7e0132e01c224763cdaf42',NULL,NULL,NULL,'2024-07-12 16:41:36',NULL,'2024-07-14 22:23:41',NULL,'Admin');
+(14,'amirul007','$2y$10$NRkn4nZ13cJ4oZSH2v2.Hu9OGkVLi8WnI6WGFHBwZQmJRn6WzzwCm','Amirul Putra Justicia','eb835a2240266f09736e330ad63cc34545bc32369a659fb20715321102b8d29e',NULL,NULL,NULL,'2024-07-12 16:41:36',NULL,'2024-07-15 00:11:20','2024-07-15 00:11:23','Admin');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
