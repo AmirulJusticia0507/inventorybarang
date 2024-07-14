@@ -9,51 +9,105 @@ if (!isset($_SESSION['userid'])) {
     exit;
 }
 
-// Proses form submit untuk menambah atau mengedit barang
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['action']) && $_POST['action'] == 'edit') {
-        // Proses edit barang
-        $id = $_POST['id'];
-        $nama_barang = $_POST['nama_barang'];
-        $deskripsi = $_POST['deskripsi'];
-        $harga = $_POST['harga'];
-        $stok = $_POST['stok'];
-        $klasifikasi_id = $_POST['klasifikasi_id'];
+$action = isset($_POST['action']) ? $_POST['action'] : '';
 
-        $sql = "UPDATE barang SET nama_barang = ?, deskripsi = ?, harga = ?, stok = ?, klasifikasi_id = ? WHERE id = ?";
-        $stmt = $koneklocalhost->prepare($sql);
-        $stmt->bind_param("ssdiii", $nama_barang, $deskripsi, $harga, $stok, $klasifikasi_id, $id);
-        $stmt->execute();
-        $stmt->close();
-    } elseif (isset($_POST['action']) && $_POST['action'] == 'delete') {
-        // Proses delete barang
+// Proses form submit untuk menambah, mengedit, atau menghapus klasifikasi barang
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($action == 'edit') {
+        // Proses edit klasifikasi barang
         $id = $_POST['id'];
-        $sql = "DELETE FROM barang WHERE id = ?";
+        $nama_klasifikasi = $_POST['nama_klasifikasi'];
+        $deskripsi = $_POST['deskripsi'];
+
+        $sql = "UPDATE klasifikasi_barang SET nama_klasifikasi = ?, deskripsi = ? WHERE id = ?";
+        $stmt = $koneklocalhost->prepare($sql);
+        $stmt->bind_param("ssi", $nama_klasifikasi, $deskripsi, $id);
+        if ($stmt->execute()) {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Klasifikasi barang berhasil diupdate!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = 'categories.php';
+                        }
+                    });
+                  </script>";
+        } else {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat mengupdate klasifikasi barang!',
+                    });
+                  </script>";
+        }
+        $stmt->close();
+    } elseif ($action == 'delete') {
+        // Proses delete klasifikasi barang
+        $id = $_POST['id'];
+        $sql = "DELETE FROM klasifikasi_barang WHERE id = ?";
         $stmt = $koneklocalhost->prepare($sql);
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if ($stmt->execute()) {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Klasifikasi barang berhasil dihapus!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = 'categories.php';
+                        }
+                    });
+                  </script>";
+        } else {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat menghapus klasifikasi barang!',
+                    });
+                  </script>";
+        }
         $stmt->close();
     } else {
-        // Proses tambah barang
-        $nama_barang = $_POST['nama_barang'];
+        // Proses tambah klasifikasi barang
+        $nama_klasifikasi = $_POST['nama_klasifikasi'];
         $deskripsi = $_POST['deskripsi'];
-        $harga = $_POST['harga'];
-        $stok = $_POST['stok'];
-        $klasifikasi_id = $_POST['klasifikasi_id'];
 
-        $sql = "INSERT INTO barang (nama_barang, deskripsi, harga, stok, klasifikasi_id) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO klasifikasi_barang (nama_klasifikasi, deskripsi) VALUES (?, ?)";
         $stmt = $koneklocalhost->prepare($sql);
-        $stmt->bind_param("ssdii", $nama_barang, $deskripsi, $harga, $stok, $klasifikasi_id);
-        $stmt->execute();
+        $stmt->bind_param("ss", $nama_klasifikasi, $deskripsi);
+        if ($stmt->execute()) {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Klasifikasi barang berhasil ditambahkan!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = 'categories.php';
+                        }
+                    });
+                  </script>";
+        } else {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat menambah klasifikasi barang!',
+                    });
+                  </script>";
+        }
         $stmt->close();
     }
 }
 
-// Ambil data barang dari database
-$sql_barang = "SELECT b.id, b.nama_barang, b.deskripsi, b.harga, b.stok, k.nama_klasifikasi 
-               FROM barang b 
-               JOIN klasifikasi_barang k ON b.klasifikasi_id = k.id";
-$result_barang = $koneklocalhost->query($sql_barang);
+// Ambil data klasifikasi barang dari database
+$sql_klasifikasi = "SELECT id, nama_klasifikasi, deskripsi FROM klasifikasi_barang";
+$result_klasifikasi = $koneklocalhost->query($sql_klasifikasi);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,44 +216,43 @@ $result_barang = $koneklocalhost->query($sql_barang);
 
                 <div class="container-fluid mt-4">
                     <div class="card-body">
-                        <h2>Tambah Klasifikasi Barang</h2>
+                        <h2>Form Klasifikasi Barang</h2>
                         <form method="POST" action="categories.php">
+                            <input type="hidden" id="action" name="action" value="add">
+                            <input type="hidden" id="id" name="id" value="">
+
                             <div class="mb-3">
-                                <label for="nama_klasifikasi" class="form-label">Nama Klasifikasi</label>
+                                <label for="nama_klasifikasi" class="form-label"><i class="fas fa-tags"></i> Nama Klasifikasi</label>
                                 <input type="text" class="form-control" id="nama_klasifikasi" name="nama_klasifikasi" required>
                             </div>
                             <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                <label for="deskripsi" class="form-label"><i class="fas fa-info-circle"></i> Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Tambah Klasifikasi</button>
+                            <button type="submit" id="submitBtn" class="btn btn-primary">Tambah Klasifikasi</button>
                         </form>
                     </div>
                 </div><br><hr>
 
                 <div class="container-fluid mt-4">
-                    <h2>Daftar Barang</h2>
+                    <h2>Daftar Klasifikasi Barang</h2>
                     <table id="klasifikasiTable" class="display table table-bordered table-striped table-hover responsive nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Nama Barang</th>
+                                <th>ID</th>
+                                <th>Nama Klasifikasi</th>
                                 <th>Deskripsi</th>
-                                <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Klasifikasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $result_barang->fetch_assoc()): ?>
+                            <?php while ($row = $result_klasifikasi->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?= $row['nama_barang'] ?></td>
-                                    <td><?= $row['deskripsi'] ?></td>
-                                    <td><?= $row['harga'] ?></td>
-                                    <td><?= $row['stok'] ?></td>
+                                    <td><?= $row['id'] ?></td>
                                     <td><?= $row['nama_klasifikasi'] ?></td>
+                                    <td><?= $row['deskripsi'] ?></td>
                                     <td>
-                                        <button class="btn btn-warning" onclick="editBarang(<?= $row['id'] ?>, '<?= $row['nama_barang'] ?>', '<?= $row['deskripsi'] ?>', <?= $row['harga'] ?>, <?= $row['stok'] ?>, <?= $row['klasifikasi_id'] ?>)">Edit</button>
+                                        <button class="btn btn-warning" onclick="editKlasifikasi(<?= $row['id'] ?>, '<?= $row['nama_klasifikasi'] ?>', '<?= $row['deskripsi'] ?>')">Edit</button>
                                         <form method="POST" action="categories.php" style="display:inline;">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
@@ -212,56 +265,6 @@ $result_barang = $koneklocalhost->query($sql_barang);
                     </table>
                 </div>
 
-                <!-- Modal for Edit Product -->
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel">Edit Barang</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form method="POST" action="categories.php">
-                                <input type="hidden" name="action" value="edit">
-                                <input type="hidden" name="id" id="edit_id">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="edit_nama_barang">Nama Barang</label>
-                                        <input type="text" class="form-control" id="edit_nama_barang" name="nama_barang" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="edit_deskripsi">Deskripsi</label>
-                                        <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="3"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="edit_harga">Harga</label>
-                                        <input type="number" class="form-control" id="edit_harga" name="harga" step="0.01" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="edit_stok">Stok</label>
-                                        <input type="number" class="form-control" id="edit_stok" name="stok" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="edit_klasifikasi_id">Klasifikasi</label>
-                                        <select class="form-control" id="edit_klasifikasi_id" name="klasifikasi_id" required>
-                                            <?php
-                                            $klasifikasi_result = $koneklocalhost->query("SELECT id, nama_klasifikasi FROM klasifikasi_barang");
-                                            while ($row = $klasifikasi_result->fetch_assoc()):
-                                            ?>
-                                                <option value="<?= $row['id'] ?>"><?= $row['nama_klasifikasi'] ?></option>
-                                            <?php endwhile; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
@@ -297,14 +300,12 @@ $result_barang = $koneklocalhost->query($sql_barang);
             });
         });
 
-        function editBarang(id, nama, deskripsi, harga, stok, klasifikasi_id) {
-            $('#edit_id').val(id);
-            $('#edit_nama_barang').val(nama);
-            $('#edit_deskripsi').val(deskripsi);
-            $('#edit_harga').val(harga);
-            $('#edit_stok').val(stok);
-            $('#edit_klasifikasi_id').val(klasifikasi_id);
-            $('#editModal').modal('show');
+        function editKlasifikasi(id, nama_klasifikasi, deskripsi) {
+            document.getElementById('action').value = 'edit';
+            document.getElementById('id').value = id;
+            document.getElementById('nama_klasifikasi').value = nama_klasifikasi;
+            document.getElementById('deskripsi').value = deskripsi;
+            document.getElementById('submitBtn').innerText = 'Update Klasifikasi';
         }
     </script>
 </body>
