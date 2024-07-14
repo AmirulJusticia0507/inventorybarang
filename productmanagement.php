@@ -226,7 +226,7 @@ $barang_result = $koneklocalhost->query($barang_sql);
 
                 <div class="container-fluid">
                     <div class="card-body">
-                        <h2>Tambah/Edit Barang</h2>
+                        <h2>Product Management</h2>
                         <form method="POST" action="productmanagement.php" enctype="multipart/form-data">
                             <input type="hidden" name="action" id="action">
                             <input type="hidden" name="id" id="editId">
@@ -298,8 +298,9 @@ $barang_result = $koneklocalhost->query($barang_sql);
                                         <td><?= $row['stok'] ?></td>
                                         <td><?= $row['nama_klasifikasi'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-warning editBtn" data-id="<?= $row['id'] ?>"><i class="fas fa-edit"></i> Edit</button>
-                                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="<?= $row['id'] ?>"><i class="fas fa-trash-alt"></i> Hapus</button>
+                                            <a href="product_details.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm" title="Lihat Detail"><i class="fas fa-eye"></i></a>
+                                            <button type="button" class="btn btn-sm btn-warning editBtn" data-id="<?= $row['id'] ?>"><i class="fas fa-edit"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="<?= $row['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -308,29 +309,6 @@ $barang_result = $koneklocalhost->query($barang_sql);
                     </div>
                 </div>
 
-                <!-- Modal for Product Details -->
-                <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="detailsModalLabel">Detail Barang</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Nama Barang:</strong> <span id="details_nama_barang"></span></p>
-                                <p><strong>Deskripsi:</strong> <span id="details_deskripsi"></span></p>
-                                <p><strong>Harga:</strong> <span id="details_harga"></span></p>
-                                <p><strong>Stok:</strong> <span id="details_stok"></span></p>
-                                <p><strong>Klasifikasi:</strong> <span id="details_klasifikasi"></span></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
@@ -426,5 +404,6 @@ $barang_result = $koneklocalhost->query($barang_sql);
             });
         });
     </script>
+    
 </body>
 </html>
