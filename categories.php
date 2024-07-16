@@ -122,7 +122,10 @@ $result_klasifikasi = $koneklocalhost->query($sql_klasifikasi);
     <!-- Tambahkan link DataTables CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="checkbox.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <!-- Sertakan CSS Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -229,7 +232,7 @@ $result_klasifikasi = $koneklocalhost->query($sql_klasifikasi);
                                 <label for="deskripsi" class="form-label"><i class="fas fa-info-circle"></i> Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
                             </div>
-                            <button type="submit" id="submitBtn" class="btn btn-primary">Tambah Klasifikasi</button>
+                            <button type="submit" id="submitBtn" class="myButtonCekSaldo"><i class="fas fa-floppy-disk"></i> Tambah Klasifikasi</button>
                         </form>
                     </div>
                 </div><br><hr>
@@ -252,11 +255,11 @@ $result_klasifikasi = $koneklocalhost->query($sql_klasifikasi);
                                     <td><?= $row['nama_klasifikasi'] ?></td>
                                     <td><?= $row['deskripsi'] ?></td>
                                     <td>
-                                        <button class="btn btn-warning" onclick="editKlasifikasi(<?= $row['id'] ?>, '<?= $row['nama_klasifikasi'] ?>', '<?= $row['deskripsi'] ?>')">Edit</button>
+                                        <button class="btn btn-warning" onclick="editKlasifikasi(<?= $row['id'] ?>, '<?= $row['nama_klasifikasi'] ?>', '<?= $row['deskripsi'] ?>')"><i class="fas fa-edit"></i> Edit</button>
                                         <form method="POST" action="categories.php" style="display:inline;">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -275,7 +278,11 @@ $result_klasifikasi = $koneklocalhost->query($sql_klasifikasi);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<!-- Sertakan DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.15/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <!-- Tambahkan Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>

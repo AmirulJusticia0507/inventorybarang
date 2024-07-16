@@ -25,6 +25,20 @@
                                 exit;
                             }
                             break;
+                        
+                            case 'supplier':
+                            if ($currentPage !== 'supplier.php') {
+                                header("Location: supplier.php?page=supplier");
+                                exit;
+                            }
+                            break;
+                        
+                        case 'purchase_orders':
+                            if ($currentPage !== 'purchase_orders.php') {
+                                header("Location: purchase_orders.php?page=purchase_orders");
+                                exit;
+                            }
+                            break;
                             
                         case 'dashboard':
                             if ($currentPage !== 'index.php') {

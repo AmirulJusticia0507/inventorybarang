@@ -66,7 +66,24 @@ $usersid = isset($_SESSION['usersid']) ? $_SESSION['usersid'] : '';
                     <p>Classification</p>
                 </a>
             </li>
-            
+            <li class="nav-item">
+                <a href="supplier.php?page=supplier" class="nav-link <?php echo isPageActive('supplier'); ?>">
+                    <i class="fa fa-truck nav-icon"></i>
+                    <p>Supplier</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="purchase_orders.php?page=purchase_orders" class="nav-link <?php echo isPageActive('purchase_orders'); ?>">
+                    <i class="fa fa-file-invoice nav-icon"></i>
+                    <p>Purchase Order</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="purchase_order_details.php?page=purchase_order_details" class="nav-link <?php echo isPageActive('purchase_order_details'); ?>">
+                    <i class="fa fa-file-invoice nav-icon"></i>
+                    <p>Purchase Order Details</p>
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="#" class="nav-link logout-link">
                     <i class="fas fa-sign-out-alt nav-icon"></i>

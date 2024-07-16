@@ -37,6 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt = $koneklocalhost->prepare($sql);
                 $stmt->bind_param("ssdiss", $nama_barang, $deskripsi, $harga, $stok, $klasifikasi_id, $photo_product);
                 $success_message = "Barang berhasil ditambahkan.";
+
+                // Tambahkan stok barang ke database
+                if ($stmt->execute()) {
+                    $barang_id = $stmt->insert_id;
+                    updateStokBarang($barang_id, $stok);
+                }
             } elseif ($action == 'edit' && isset($_POST['id'])) {
                 // Proses edit barang
                 $id = $_POST['id'];
@@ -50,6 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmt->bind_param("ssdiii", $nama_barang, $deskripsi, $harga, $stok, $klasifikasi_id, $id);
                 }
                 $success_message = "Barang berhasil diperbarui.";
+
+                // Update stok barang setelah edit
+                if ($stmt->execute()) {
+                    updateStokBarang($id, $stok);
+                }
             }
 
             // Eksekusi statement SQL
@@ -106,6 +117,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// Fungsi untuk update stok barang
+function updateStokBarang($barang_id, $stok) {
+    global $koneklocalhost;
+    
+    $sql_update_stok = "UPDATE barang SET stok = stok - ? WHERE id = ?";
+    $stmt_update_stok = $koneklocalhost->prepare($sql_update_stok);
+    $stmt_update_stok->bind_param("ii", $stok, $barang_id);
+    $stmt_update_stok->execute();
+    $stmt_update_stok->close();
+}
+
+
 // Ambil data klasifikasi barang
 $klasifikasi_sql = "SELECT id, nama_klasifikasi FROM klasifikasi_barang";
 $klasifikasi_result = $koneklocalhost->query($klasifikasi_sql);
@@ -127,9 +150,10 @@ $barang_result = $koneklocalhost->query($barang_sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Tambahkan link AdminLTE CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
-    <!-- Tambahkan link DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <!-- Tambahkan link DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="checkbox.css">
     <!-- Sertakan CSS Select2 -->
@@ -260,7 +284,7 @@ $barang_result = $koneklocalhost->query($barang_sql);
                                 <label for="photo_product" class="form-label"><i class="fas fa-camera"></i> Photo Product</label>
                                 <input type="file" class="form-control-file" id="photo_product" name="photo_product">
                             </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="myButtonCekSaldo"><i class="fas fa-floppy-disk"></i> Simpan</button>
                         </form>
                     </div>
                     <hr>
@@ -321,7 +345,10 @@ $barang_result = $koneklocalhost->query($barang_sql);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Sertakan DataTables JS -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.11.15/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <!-- Tambahkan Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
