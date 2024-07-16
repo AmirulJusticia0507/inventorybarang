@@ -297,7 +297,7 @@ $result_supplier = $koneklocalhost->query($sql_supplier);
                                         <tr>
                                             <td><?php echo $no; ?></td>
                                             <td><?php echo $row['nama_supplier']; ?></td>
-                                            <td><?php echo date('d-m-Y', strtotime($row['tanggal_pesanan'])); ?></td>
+                                            <td><?php echo $row['tanggal_pesanan']; ?></td>
                                             <td><?php echo $row['status']; ?></td>
                                             <td>
                                                 <button class="btn btn-warning btn-sm btn-edit" data-id="<?php echo $row['purchase_order_id']; ?>" data-supplier_id="<?php echo $row['supplier_id']; ?>" data-tanggal_pesanan="<?php echo $row['tanggal_pesanan']; ?>" data-status="<?php echo $row['status']; ?>"><i class="fas fa-edit"></i> Edit</button>
@@ -396,14 +396,22 @@ $result_supplier = $koneklocalhost->query($sql_supplier);
                 var tanggal_pesanan = $(this).data('tanggal_pesanan');
                 var status = $(this).data('status');
 
+                // Ambil nama supplier berdasarkan supplier_id
+                var supplier_name = $('#supplier_id option[value="' + supplier_id + '"]').text();
+
                 // Masukkan data ke dalam form untuk diedit
                 $('#id').val(id);
-                $('#supplier_id').val(supplier_id).trigger('change');
+                $('#supplier_id').val(supplier_id).trigger('change'); // Memilih supplier_id di select2
                 $('#tanggal_pesanan').val(tanggal_pesanan);
                 $('#status').val(status);
                 $('#action').val('edit');
                 $('#submitBtn').text('Update Purchase Order');
-                updatePreview();
+
+                // Tampilkan nama supplier di preview
+                $('#selected_suppliers').html('<input type="hidden" name="supplier_id" value="' + supplier_id + '">' +
+                                            '<span class="badge bg-primary mx-1">' + supplier_name + '</span>');
+
+                updatePreview(); // Update preview detail
             });
 
             // Event handler untuk tombol delete
@@ -451,27 +459,9 @@ $result_supplier = $koneklocalhost->query($sql_supplier);
                 var tanggal_pesanan = $('#tanggal_pesanan').val();
                 var status = $('#status').val();
 
-                // Ambil tanggal dari PHP
-                var tanggal_pesanan_php = "<?php echo $row['tanggal_pesanan']; ?>";
-
-                // Buat objek Date dari tanggal PHP
-                var tanggal_pesanan = new Date(tanggal_pesanan_php);
-
-                // Buat fungsi untuk format tanggal dalam format d-m-Y
-                function formatDate(date) {
-                    var day = date.getDate();
-                    var month = date.getMonth() + 1;
-                    var year = date.getFullYear();
-
-                    return day + '-' + month + '-' + year;
-                }
-
-                // Format tanggal_pesanan dalam format d-m-Y
-                var formatted_tanggal_pesanan = formatDate(tanggal_pesanan);
-
                 $('#preview').html(`
                     <p><strong>Supplier:</strong> ${supplier_id}</p>
-                    <p><strong>Tanggal Pesanan:</strong> ${formatted_tanggal_pesanan}</p>
+                    <p><strong>Tanggal Pesanan:</strong> ${tanggal_pesanan}</p>
                     <p><strong>Status:</strong> ${status}</p>
                 `);
             }
